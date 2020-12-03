@@ -127,3 +127,10 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+#clear tkk*<moudle> generate
+*.html
+*.png
+test.py
+*.tmp
+

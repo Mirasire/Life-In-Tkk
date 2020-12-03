@@ -5,10 +5,11 @@ import os
 import pytesseract
 import traceback
 import numpy as np
-from getpass import getpass
 from selenium import webdriver
 from PIL import Image
 from bs4 import BeautifulSoup
+##if wanna secret the input passwd
+#from getpass import getpass
 
 #by mirasire
 from tkktools import w2file
@@ -53,13 +54,6 @@ class Tkk_html:
             self.firefox.find_element_by_id('imgcode').send_keys(self.vercode)
             self.firefox.find_element_by_id('loginbtn').click()
             flg = self.get_html()
-            #if flg:
-                #print('something error, please input again')
-                #user = input('user: ')
-                #passwd = input('input passwd:')
-                #self.set_login(user, passwd)
-                #print('user = ', self.user)
-                #print('passwd = ', self.passwd)
         self.firefox.quit()
 
     def gb2utf8(self, odata):
@@ -169,5 +163,5 @@ class Tkk_html:
             box = (wh*i, 0, wh*(i+1), height)
             region = img.crop(box)
             tmp = pytesseract.image_to_string(region, lang='eng', \
-                                            config="--psm 10 --oem 1 tkk")
+                                            config="--psm 10 --oem 1 -c tessedit_char_whitelist=ABCDEFGHIJKLMNOPQRSTUVvWXYZ")
             self.vercode += tmp[0]
