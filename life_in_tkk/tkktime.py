@@ -32,7 +32,7 @@ class Tkk_time:
         self.year=""
         self.month=""
         self.day=""
-        self.tkk = tkk_tools()
+        self.tkk = Tkk_tools()
         self.digital_pattern = re.compile(r'[0-9]+')
         self.td_pattern = re.compile(r'<td>([^\n]+)</td>')
         self.parse() 
