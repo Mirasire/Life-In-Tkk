@@ -5,7 +5,7 @@ import re
 from bs4 import BeautifulSoup
 
 #by mirasire 
-from tkktools import week2int
+from .tkktools import week2int
 
 #
 # some utilities for tkk

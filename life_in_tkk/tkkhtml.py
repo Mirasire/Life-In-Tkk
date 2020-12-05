@@ -1,7 +1,8 @@
-#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
-import time
 import os
+import sys
+import time
 import pytesseract
 import traceback
 import numpy as np
@@ -11,8 +12,17 @@ from bs4 import BeautifulSoup
 ##if wanna secret the input passwd
 #from getpass import getpass
 
+sys.path.append(os.path.dirname(__file__))
+
 #by mirasire
-from tkktools import w2file
+from .tkktools import (week2int,
+                       w2file,
+                       course2list,
+                       nweek2int,
+                       list2str,
+                       format_cname)
+
+from life_in_tkk import tkktools
 
 #
 # get schedule html && adjusted course infomation
@@ -66,11 +76,11 @@ class Tkk_html:
             self.firefox.find_element_by_link_text('常用链接').click()
             time.sleep(1)
             self.firefox.find_element_by_link_text('课程表').click()
-            w2file('cschedule.html', self.gb2utf8(self.firefox.page_source))
+            w2file(tkktools.csch_addr, self.gb2utf8(self.firefox.page_source))
             self.firefox.find_element_by_link_text('常用链接').click()
             time.sleep(1)
             self.firefox.find_element_by_link_text('调停补课信息').click()
-            w2file('cadjusted.html', self.gb2utf8(self.firefox.page_source))
+            w2file(tkktools.cadj_addr, self.gb2utf8(self.firefox.page_source))
         except Exception as e:
             print(str(e))
             return int(1)
@@ -118,8 +128,8 @@ class Tkk_html:
     def identify_image(self):
         self.firefox.get(self.url)
         png = self.firefox.find_element_by_id('img')
-        png.screenshot('verify.png')
-        img = self.img = Image.open('verify.png')
+        png.screenshot(tkktools.pic_addr)
+        img = self.img = Image.open(tkktools.pic_addr)
 
         # set width and height
         width = self.width = img.width
@@ -145,7 +155,7 @@ class Tkk_html:
                 pix = (255, 255, 255, 255) if (self.pixel2hex(pix) == dic_st[-1][0]) else pix
                 self.img.putpixel((y,x), pix)
 
-        img.save('kill.png')
+        #img.save('kill.png')
 
         # convert to white/black
         img = img.convert('L')
@@ -153,8 +163,9 @@ class Tkk_html:
         table = []
         for i in range(256):
             table.append(0 if i < limite else 1)
+
         img = img.point(table, '1')
-        img.save('gray.png')
+        #img.save('gray.png')
 
         # cut into 4 pieces
         wh = int(width/4)

@@ -1,8 +1,12 @@
-#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 import time
 import re
 from bs4 import BeautifulSoup
+
+csch_addr = "./cschedule.html"
+cadj_addr = "./cadjusted.html"
+pic_addr = "./verify.png"
 
 course_name = re.compile(r'([^(^)]+)\(')
 course_grade = re.compile(r'\([a-zA-Z]+\)')

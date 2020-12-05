@@ -1,9 +1,24 @@
-#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+#import os, sys
+#sys.path.append(os.path.dirname(__file__))
 
 import re
 from bs4 import BeautifulSoup
 
-from tkktools import *
+from .tkktools import (week2int,
+                       course2list,
+                       nweek2int,
+                       list2str,
+                       format_cname,
+                       course_name,
+                       course_grade,
+                       course_section,
+                       course_nweek,
+                       course_digital,
+                       course_rnc)
+
+from life_in_tkk import tkktools
 
 class Tkk_course:
 
@@ -61,15 +76,11 @@ class Tkk_course:
 
 class Tkk_schedule:
 
-    def __init__(self, csch_html="./cschedule.html", cadj_html="./cadjusted.html", tencode='utf-8'):
+    def __init__(self):
         self.tsch = [[dict() for i in range(10)] for i in range(10)]
         self.ctime = [list() for i in range(10)]
         self.viscrs = [[list() for i in range(10)] for i in range(10)]
         self.wk_cols = list()
-        self.csch_str = open(csch_html, "r", encoding=tencode)
-        self.csch_soup = BeautifulSoup(self.csch_str, 'html.parser')
-        self.cadj_str = open(cadj_html, "r", encoding=tencode)
-        self.cadj_soup = BeautifulSoup(self.cadj_str, 'html.parser')
         # rnc2y[nth-class] -> index
         self.rnc2y = dict()
 
@@ -127,7 +138,13 @@ class Tkk_schedule:
             self.tsch[x][y][tt.cname] = tt
 
     #tcourse formate 0: name | 1: teacher | 2: position | 3: rweek regoin
-    def generate_schedule(self):
+    def generate_schedule(self, tencode='utf-8'):
+        csch_html=tkktools.csch_addr
+        cadj_html=tkktools.cadj_addr
+        self.csch_str = open(csch_html, "r", encoding=tencode)
+        self.csch_soup = BeautifulSoup(self.csch_str, 'html.parser')
+        self.cadj_str = open(cadj_html, "r", encoding=tencode)
+        self.cadj_soup = BeautifulSoup(self.cadj_str, 'html.parser')
         all_tr = self.csch_soup.find_all('tr', class_= [ 'odd', 'even' ])
 
         self.init_wkcols()

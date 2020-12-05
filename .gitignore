@@ -133,4 +133,7 @@ dmypy.json
 *.png
 test.py
 *.tmp
-
+.idea/
+*.txt
+setup.py
+test/
