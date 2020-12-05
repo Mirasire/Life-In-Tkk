@@ -12,6 +12,8 @@
 
 ## 如何使用
 
+> __!!注意: 还需安装 `firefox`, `geckodriver`, `tesseract`!!__
+
 __1. 直接使用__
 
 将项目中的`life_in_tkk` 放入所调用的`xx.py`的同级目录。
@@ -32,21 +34,21 @@ __2. 基于pip安装使用__
 pip3 install life_in_tkk
 ```
 
-## 安装使用
+## 相关依赖
 
 > 版本为开发时使用的版本，未对其他版本进行测试~~其他应该也没什么问题~~
 
-## `Python3`所需的依赖
+### `Python3`所需的依赖
 
 `Python3`所需的依赖包，详情可见[**依赖目录**](#依赖目录)。
 
-## 其余依赖
+### 其余依赖
 
 - firefox`83.0`
   - geckodriver`0.27.0`
 - tesseract`4.1.1`
 
-### GNU/Linux
+#### GNU/Linux
 
 __Ubuntu/Mint:__
 
@@ -60,7 +62,7 @@ __Arch Linux/Marjorn:__
 sudo pacman -S tesseract  tesseract-data-eng
 sudo pacman -S firefox geckodriver 
 ```
-### Windows 10
+#### Windows 10
 
 可以在`Github`仓库的 [**UB-Mannheim/tesseract**](https://github.com/UB-Mannheim/tesseract/wiki) 和 [**mozilla/geckodriver**](https://github.com/mozilla/geckodriver/releases) 中找到对应的 window32/64 安装包，安装即可。
 
