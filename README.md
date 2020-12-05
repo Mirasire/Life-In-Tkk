@@ -8,7 +8,7 @@
 
 ## 简介
 
-用于厦门大学嘉庚学院`TKK`的课表查询的第三方`Python3`库。
+用于厦门大学嘉庚学院`TKK`的综合信息查询的第三方`Python3`库。
 
 ## 如何使用
 
@@ -20,12 +20,14 @@ __1. 直接使用__
 # 需要import
 from life_in_tkk import Tkk_html
 from life_in_tkk import Tkk_schedule
-from life_in_tkk import Tkk_time
+# ....
+import life_in_tkk
 ```
 
 __2. 基于pip安装使用__
 
-# TODO
+使用 `pip3` 进行下载，之后具体使用方式与直接使用相同。
+
 ```
 pip3 install life_in_tkk
 ```
@@ -83,6 +85,12 @@ __!!注意: 十分重要!!__
 
 ## Plan
 
+- [X] 课表库
+   - [X] 自动识别验证码
+   - [X] 调课
+   - [X] 补课
 - [ ] 电费查询库
 
-## 使用许可
+## LICENSE
+
+MIT &copy; Mirasire

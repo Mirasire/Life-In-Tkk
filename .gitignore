@@ -137,3 +137,6 @@ test.py
 *.txt
 setup.py
 test/
+life_in_tkk.egg-info/
+dist/
+build/
