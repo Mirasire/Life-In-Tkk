@@ -1,6 +1,6 @@
 # Life In Tkk
 
-<p align="center">
+<p align="left">
 <a href="https://github.com/Mirasire"><img src="https://img.shields.io/badge/XUJC-Life%20In%20Tkk-blue.svg" alt="github"></a>
 <a href="https://github.com/Mirasire"><img src="https://img.shields.io/github/languages/top/Mirasire/Life-In-Tkk.svg" alt="github"></a>
 <a href="https://github.com/Mirasire"><img src="https://img.shields.io/github/license/Mirasire/Life-In-Tkk.svg" alt="github"></a>
