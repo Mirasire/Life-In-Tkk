@@ -18,6 +18,7 @@ course_rnc = re.compile(r'[0-9午]+')
 def w2file(name, data):
     with open(name,"w", encoding='utf-8') as f:
         f.write(data)
+        f.close
 
 def week2int(cweek):
     w2i = {

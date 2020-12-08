@@ -47,8 +47,7 @@ class Tkk_time:
         index_html = self.tkk.get_index().text
         soup_data = BeautifulSoup(index_html, 'html.parser')
         otkk_data = soup_data.find_all('script')
-        tkk_data = self.td_pattern.findall(otkk_data[0].text)
-        print(tkk_data)
+        tkk_data = self.td_pattern.findall("".join(otkk_data[0].contents))
         # analyse
         yymm = self.digital_pattern.findall(tkk_data[0])
         day  = tkk_data[1]

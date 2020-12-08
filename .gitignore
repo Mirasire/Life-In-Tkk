@@ -140,3 +140,4 @@ test/
 life_in_tkk.egg-info/
 dist/
 build/
+package.sh
