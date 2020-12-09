@@ -40,9 +40,8 @@ def week2int(cweek):
     return w2i[cweek]
 
 def get_ntime():
-    today_time = {'hour': time.strftime("%H"), 'time': time.strftime("%S")}
+    today_time = {'hour': time.strftime("%H"), 'time': time.strftime("%M")}
     return today_time
-    #return time.strftime("%Y-%M-%D", time.localtime())
 
 def course2list(course):
     s = course.replace('<br/>', '_')
