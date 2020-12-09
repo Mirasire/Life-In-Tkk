@@ -136,7 +136,7 @@ test.py
 .idea/
 *.txt
 setup.py
-test/
+test_data/
 life_in_tkk.egg-info/
 dist/
 build/
