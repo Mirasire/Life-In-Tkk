@@ -1,41 +1,35 @@
 #!/usr/bin/python
 
-import requests
 import re
+import time
+import requests
 from bs4 import BeautifulSoup
 
 #by mirasire 
 from .tkktools import week2int
 
 #
-# some utilities for tkk
-#
-class Tkk_tools:
-    home_page = "http://jw.xujc.com/"
-    header = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64)"
-                    "AppleWebKit/537.36 (KHTML, like Gecko)"
-                    "Chrome/59.0.3071.115 Safari/537.36"
-    }
-    
-    def get_index(self):
-        return requests.get(self.home_page, headers=self.header)
-
-
-#
 # tkk_time means the standed time from tkk
 #
 class Tkk_time:
+
+
     def __init__(self):
         self.week=""
         self.nthweek=""
         self.year=""
         self.month=""
         self.day=""
-        self.tkk = Tkk_tools()
-        self.digital_pattern = re.compile(r'[0-9]+')
-        self.td_pattern = re.compile(r'<td>([^\n]+)</td>')
+        self.home_page = "http://jw.xujc.com/"
+        self.header = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64)"
+                        "AppleWebKit/537.36 (KHTML, like Gecko)"
+                        "Chrome/59.0.3071.115 Safari/537.36"
+        }
         self.parse() 
+
+    def __get_index(self):
+        return requests.get(self.home_page, headers=self.header)
 
     def __repr__(self):
         key = ["year", "month", "day", "week", "nthweek"]
@@ -43,16 +37,18 @@ class Tkk_time:
         return str(dict(zip(key, value)))
 
     def parse(self):
+        digital_pattern = re.compile(r'[0-9]+')
+        td_pattern = re.compile(r'<td>([^\n]+)</td>')
         # requests tkk_home_page
-        index_html = self.tkk.get_index().text
+        index_html = self.__get_index().text
         soup_data = BeautifulSoup(index_html, 'html.parser')
         otkk_data = soup_data.find_all('script')
-        tkk_data = self.td_pattern.findall("".join(otkk_data[0].contents))
+        tkk_data = td_pattern.findall("".join(otkk_data[0].contents))
         # analyse
-        yymm = self.digital_pattern.findall(tkk_data[0])
+        yymm = digital_pattern.findall(tkk_data[0])
         day  = tkk_data[1]
         week = week2int(tkk_data[2])
-        nthweek = self.digital_pattern.findall(tkk_data[3])
+        nthweek = digital_pattern.findall(tkk_data[3])
         ## package
         self.year = int(yymm[0])
         self.month = int(yymm[1])

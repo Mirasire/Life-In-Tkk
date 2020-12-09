@@ -42,7 +42,7 @@ class Tkk_html:
     def start_firefox(self):
         self.option = webdriver.FirefoxOptions()
         self.option.add_argument('-headless')
-        self.firefox = webdriver.Firefox(options=self.option);
+        self.firefox = webdriver.Firefox(options=self.option)
 
     def set_login(self, user, passwd):
         self.user = user
@@ -55,7 +55,7 @@ class Tkk_html:
         self.set_login(user, passwd)
         while flg:
             self.identify_image()
-            #print(self.vercode)
+            print(self.vercode)
             self.firefox.find_element_by_id('username').clear()
             self.firefox.find_element_by_id('username').send_keys(self.user)
             self.firefox.find_element_by_id('password').clear()
@@ -74,11 +74,11 @@ class Tkk_html:
     def get_html(self):
         try:
             self.firefox.find_element_by_link_text('常用链接').click()
-            time.sleep(1)
+            time.sleep(0.4)
             self.firefox.find_element_by_link_text('课程表').click()
             w2file(tkktools.csch_addr, self.gb2utf8(self.firefox.page_source))
             self.firefox.find_element_by_link_text('常用链接').click()
-            time.sleep(1)
+            time.sleep(0.4)
             self.firefox.find_element_by_link_text('调停补课信息').click()
             w2file(tkktools.cadj_addr, self.gb2utf8(self.firefox.page_source))
         except Exception as e:

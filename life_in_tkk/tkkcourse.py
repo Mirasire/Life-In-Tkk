@@ -91,6 +91,9 @@ class Tkk_schedule:
                 print(self.tsch[x][y])
             print('----------------------------------------------------------------')
 
+    def get_timetable(self):
+        return self.ctime
+
     def init_wkcols(self):
         all_td = self.csch_soup.find_all('th', colspan=course_digital)
         for nums in all_td:
