@@ -34,6 +34,12 @@ __2. 基于pip安装使用__
 pip3 install life_in_tkk
 ```
 
+__3. 相关文档/手册__
+
+
+- [__Life-In-Tkk wiki__](https://github.com/Mirasire/Life-In-Tkk/wiki)
+- [__Life-In-Tkk API__](https://github.com/Mirasire/Life-In-Tkk/wiki/API-%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3)
+
 ## 相关依赖
 
 > 版本为开发时使用的版本，未对其他版本进行测试~~其他应该也没什么问题~~
@@ -96,3 +102,4 @@ __!!注意: 十分重要!!__
 ## LICENSE
 
 MIT &copy; Mirasire
+
