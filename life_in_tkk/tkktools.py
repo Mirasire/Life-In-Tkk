@@ -41,11 +41,12 @@ def week2int(cweek):
 
 class Get_ntime:
     def __init__(self):
-        self.shour = time.strftime("%H")
-        self.sminute = time.strftime("%M")
-        self.hour = int(time.strftime("%H"))
-        self.minute = int(time.strftime("%M"))
-        #return today_time
+        ttime = time.localtime()
+        self.hour = ttime.tm_hour
+        self.minute = ttime.tm_min
+        self.shour = "%02d" % self.hour
+        self.sminute = "%02d" % self.minute
+
     def __repr__(self):
         return str({'hour': self.hour, 'minute': self.minute})
 

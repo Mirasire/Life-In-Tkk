@@ -137,52 +137,110 @@ class Tkk_schedule:
                     self.__add_course2schedule(x, y, tcourse)
 
     def __get_course(self, x, y, nwk):
-        # Consider Other situation
+        # Consider other situation
         re_course = Tkk_course()
         for i, course in enumerate(self.tsch[x][y].values()):
             if course.isrun[nwk] != -1:
                 re_course = course
-                #print("x = %d | course = %s | type = %s" % (i, str(course), type(course)))
                 break
 
         return re_course
 
-    #def time2end(self):
-    #def time2relax(self):
+    def __time2bg(self, cidx):
+        return int(self.now_time) - int(self.ctime[cidx][0][0])
 
-    def is_incourse(self, idx, time):
-        return (self.ctime[idx][0][0] <= time)
+    # the time before the second class
+    def __time2sbg(self, cidx):
+        return int(self.now_time) - int(self.ctime[cidx][-1][0])
+
+    def __time2end(self, cidx):
+        return int(self.ctime[cidx][-1][-1]) - int(self.now_time)
+
+    def __time2relax(self, cidx):
+        return int(self.ctime[cidx][0][-1]) - int(self.now_time)
+
+    def __is_incourse(self, idx):
+        return (self.ctime[idx][0][0] <= self.now_time)
+
+    def __is_inrelax(self, idx):
+        return (self.ctime[idx][0][1] < self.now_time and \
+                self.now_time < self.ctime[idx][-1][0])
 
     def __now_cidx(self, now_time):
         time_tabel = self.ctime
         idx = -1
         for i, tmspan in enumerate(time_tabel):
-            print(i, tmspan)
+            #print(i, tmspan)
             if(now_time<="0700" or now_time>"2110"):
                 break
             elif now_time<=tmspan[-1][-1]:
-                #time_rm1 = int(tmspan[0][0]) - int(now_time)
-                #time_rm2 = int(tmspan[-1][-1]) - int(now_time)
                 idx = i
                 break
         return idx
 
+    def __syn_time(self):
+        tmp_time = Get_ntime()
+        self.jw_time = Tkk_time()
+        self.now_time = "%02d%02d" % (tmp_time.hour, tmp_time.minute)
+        #self.now_time = "0710"
+
+    def __get_duration(self, nwidx, nxidx):
+        re_dura = 0
+        if not self.bl_iscls:
+            re_dura = self.__time2bg(nxidx)
+        elif self.bl_isrlx:
+        #self.bl_iscls and
+            re_dura = self.__time2sbg(nwidx)
+        elif not self.bl_isrlx:
+            t2end = self.__time2end(nwidx)
+            t2rlx = self.__time2relax(nwidx)
+            re_dura = t2rlx if t2rlx >=0 else t2end
+
+        self.duration = re_dura
+        #if (self.bl_iscls and (not self.bl_isrlx)):
+
+    """
+    add 0.now_course | 1.nxt_course
+        3.bl_iscls   | 4.bl_isrlx
+
+    to the self area
+    """
+    def __pp_reminder(self):
+        self.__syn_time()
+
+        x = self.jw_time.week
+        y = self.__now_cidx(self.now_time)
+
+        # define 
+        self.bl_iscls = self.__is_incourse(y)
+        self.bl_isrlx = self.__is_inrelax(y)
+
+        y_cnxt = y + 1 if self.bl_iscls and y != 5 else y
+
+        self.now_course = self.__get_course(x, y, self.jw_time.nthweek)
+        self.nxt_course = self.__get_course(x, y_cnxt, self.jw_time.nthweek)
+        self.__get_duration(y, y_cnxt)
+
+        #print("now_course = ", self.now_course)
+        #print("nxt_course = ", self.nxt_course)
+
+        # NOW_COURSE
+        #print(self.now_time)
+        tm2relax = self.__time2relax(y)
+        tm2end = self.__time2end(y)
+        #print(str({'tm2relax': tm2relax, 'tm2end': tm2end}))
+        tm2relax = self.__time2relax(y_cnxt)
+        tm2end = self.__time2end(y_cnxt)
+        #print(str({'tm2relax': tm2relax, 'tm2end': tm2end}))
+        #print(str({'in_course': self.bl_iscls, 'in_relax': self.bl_isrlx}))
+
+
     # TODO: Judge When y = -1
     def reminder(self, tmahead=30):
-        print("tmahead = %d" % tmahead)
-        tmp_time = Get_ntime()
-        jwtime = Tkk_time()
-        now_time = "%02d%02d" % (tmp_time.hour, tmp_time.minute)
+        #print("tmahead = %d" % tmahead)
+        self.__syn_time()
+        self.__pp_reminder()
         # USE FOR DEBUG
-
-        x = jwtime.week
-        y = self.__now_cidx(now_time)
-        on_class = self.is_incourse(y, now_time)
-        y_cnxt = y + 1 if on_class and y != 5 else y
-        now_course = self.__get_course(x, y, jwtime.nthweek)
-        nxt_course = self.__get_course(x, y_cnxt, jwtime.nthweek)
-        print("now_course = ", now_course)
-        print("nxt_course = ", nxt_course)
 
     def display(self):
         for x in range(1, 8):
