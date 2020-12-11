@@ -211,6 +211,11 @@ class Tkk_schedule:
         x = self.jw_time.week
         y = self.__now_cidx(self.now_time)
 
+        # FOR JUMP area DEBUG
+        print("now_course id = ", y)
+        if(y == -1):
+            return y
+
         # define 
         self.bl_iscls = self.__is_incourse(y)
         self.bl_isrlx = self.__is_inrelax(y)
